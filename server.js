@@ -18,9 +18,8 @@ mongoose.connect('mongodb+srv://yanlingduan:duanyanling@cluster0-hv2lz.mongodb.n
 	}
 });
 
-/*
----------------------Middleware---------------------
-*/
+//---------------------Middleware---------------------
+
 
 //by setting static dir, we can find files under public folder
 app.use(express.static('__dirname' + '/public'));
@@ -37,32 +36,11 @@ app.engine('ejs', ejsmate);
 //set ejs as view engine's value
 app.set('view engine', 'ejs');
 
+var mainRoutes = require('./routes/main');
+var userRoutes = require('./routes/user');
 
-/*
----------------------API---------------------
-*/
-
-/*
-GET APIs
-*/
-app.get('/', function(req, res) {
-	res.render('main/home');
-})
-
-/*
-POST APIs
-*/
-app.post('/create-user', function(req, res, next) {
-	var user = new User();
-	user.profile.name = req.body.name;
-	user.password = req.body.password;
-	user.email = req.body.email;
-
-	user.save(function(err) {
-		if(err) return next(err);
-		res.json("Creation succeed");
-	});
-});
+app.use(mainRoutes);
+app.use(userRoutes);
 
 app.listen(3000, function(err){
 	if(err) throw err;
