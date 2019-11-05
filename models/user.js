@@ -49,5 +49,10 @@ UserSchema.pre('save', function(next) {
   });
 });
 
+/* compare password in the database and the one that the user type in */
+UserSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+}
+
 /*Export*/
 module.exports = mongoose.model('User', UserSchema);

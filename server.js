@@ -7,7 +7,8 @@ var ejsmate = require('ejs-mate');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var flash = require('express-flash');
-
+var passport = require('passport');
+var MongoStore = require('connect-mongo')(session);
 
 var User = require('./models/user');
 var secret = require('./config/secret');
