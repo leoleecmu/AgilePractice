@@ -15,7 +15,7 @@ var secret = require('./config/secret');
 
 var app = express();
 
-mongoose.connect(secret.database, function(err) {
+mongoose.connect(secret.database, { useNewUrlParser: true }, function(err) {
 	if(err) {
 		console.log("Faile with error :" + err);
 	}
@@ -39,6 +39,12 @@ app.use(session({
   secret: secret.secretKey
 }));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 //ejs. why we use ejs? ejs can generate html with js, so we can reuse html module with ejs.
 app.engine('ejs', ejsmate);
 //set ejs as view engine's value
