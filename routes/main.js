@@ -5,8 +5,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/about', function(req, res) {
-  res.render('main/about');
+  res.sendfile('./views/main/index.html');
 });
-
 
 module.exports = router;
